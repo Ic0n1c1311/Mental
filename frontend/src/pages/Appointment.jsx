@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { useParams } from "react-router-dom";
 
 const Appointment = () => {
-  const { doctors, currencysymbol } = useContext(AppContext);
+  const { doctors, currencysymbol, addBookedAppointment } = useContext(AppContext);
   const { id } = useParams();
 
   const [docInfo, setDocInfo] = useState(null);
@@ -15,6 +15,7 @@ const Appointment = () => {
     email: "",
     message: "",
   });
+  const [bookedAppointment, setBookedAppointment] = useState(null); // State to hold booked appointment info
 
   useEffect(() => {
     const doctor = doctors.find((doc) => doc._id === id);
@@ -57,30 +58,37 @@ const Appointment = () => {
 
   const handleBookAppointment = async () => {
     if (!selectedSlot || !formData.name || !formData.email) {
-      return alert(
-        "Please fill in all required fields and select a time slot."
-      );
+      return alert("Please fill in all required fields and select a time slot.");
     }
-
+  
     const appointmentData = {
       ...formData,
       date: selectedSlot.datetime,
       doctorId: id,
+      time: selectedSlot.time,
+      doctor: { // Add doctor info to the appointmentData
+        image: docInfo.image,
+        name: docInfo.name,
+        speciality: docInfo.speciality,
+        address: docInfo.address,
+      },
     };
-
+  
     console.log("Request body:", appointmentData); // Log the request body
-
+  
     try {
       const response = await fetch("http://localhost:5000/api/appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(appointmentData),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         alert("Appointment booked successfully");
+        addBookedAppointment(appointmentData); // Save booked appointment info
+        setBookedAppointment(appointmentData); // Save booked appointment info
         setFormData({ name: "", email: "", message: "" });
         setSelectedSlot(null);
       } else {
@@ -92,6 +100,7 @@ const Appointment = () => {
       alert("An error occurred while booking the appointment");
     }
   };
+  
 
   if (!docInfo) return <p>Loading...</p>;
 
@@ -150,58 +159,51 @@ const Appointment = () => {
           ))}
         </div>
 
-        <div className="flex gap-3 overflow-x-auto">
+        <div className="grid grid-cols-3 gap-4">
           {docSlots[slotIndex]?.map((slot, index) => (
             <div
               key={index}
               onClick={() => setSelectedSlot(slot)}
-              className={`p-3 rounded-lg cursor-pointer transition-all text-center ${
-                selectedSlot?.datetime.getTime() === slot.datetime.getTime()
-                  ? "bg-green-500 text-white" // Green background for selected time slot
-                  : "bg-gray-200 hover:bg-gray-300"
+              className={`p-4 border rounded-lg cursor-pointer transition-all duration-300 transform ${
+                selectedSlot === slot
+                  ? "bg-blue-500 text-white scale-105" // Blue background for selected slot
+                  : "bg-white hover:bg-blue-100"
               }`}
             >
-              {slot.time}
+              <p className="text-xl font-bold">{slot.time}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Booking Form Section */}
-      <div className="mt-10 bg-white shadow-lg rounded-lg p-6">
+      {/* Booking Form */}
+      <div className="mt-10">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-          Book Your Appointment
+          Book an Appointment
         </h2>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="p-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-          <input
-            type="email"
-            placeholder="Your Email"
-            className="p-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-          />
-          <textarea
-            placeholder="Your Message (Optional)"
-            className="col-span-2 p-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
-            value={formData.message}
-            onChange={(e) =>
-              setFormData({ ...formData, message: e.target.value })
-            }
-          ></textarea>
-        </form>
-
+        <input
+          type="text"
+          placeholder="Name"
+          className="block w-full p-2 mb-4 border rounded"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="block w-full p-2 mb-4 border rounded"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        />
+        <textarea
+          placeholder="Message"
+          className="block w-full p-2 mb-4 border rounded"
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+        />
         <button
           onClick={handleBookAppointment}
-          className="mt-6 bg-red-500 text-white text-lg py-3 px-6 rounded-lg hover:bg-red-600 transition-all duration-300"
+          className="w-full p-2 bg-green-500 text-white rounded hover:bg-green-600 transition-all"
         >
           Book Appointment
         </button>
@@ -211,3 +213,5 @@ const Appointment = () => {
 };
 
 export default Appointment;
+
+

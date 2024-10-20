@@ -110,7 +110,7 @@
 //   );
 // };
 
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 export const AppContext = createContext();
 
@@ -200,7 +200,7 @@ export const AppProvider = ({ children }) => {
   const [bookedAppointments, setBookedAppointments] = useState([]);
 
   // Function to add a booked appointment
-  const bookAppointment = (appointment) => {
+  const addBookedAppointment = (appointment) => {
     setBookedAppointments((prevAppointments) => [
       ...prevAppointments,
       appointment,
@@ -219,7 +219,7 @@ export const AppProvider = ({ children }) => {
       value={{
         doctors,
         bookedAppointments,
-        bookAppointment,
+        addBookedAppointment, // Make sure this is included
         cancelAppointment,
       }}
     >

@@ -60,4 +60,5 @@ const MyAppointments = () => {
   );
 };
 
-export default MyAppointments;
+export default MyAppointments; // Ensure this line is present
+
