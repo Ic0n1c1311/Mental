@@ -1,119 +1,112 @@
-// import { createContext } from "react"; 
-// import { doctors } from "../pages/Sessions";
-
-// // Create a context
-// export const AppContext = createContext();
-
-// // Create a provider component
-// const AppContextProvider = ({ children }) => {
-//   // Define the value object that will be passed down through the context
-//   const value = {
-//     doctors,
-//   };
-
-//   return (
-//     <AppContext.Provider value={value}>
-//       {children} {/* Render children components */}
-//     </AppContext.Provider>
-//   );
-// };
-
-// export default AppContextProvider; // Ensure default export here
-
-
-
-
-
 import { createContext, useState } from 'react';
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [doctors, setDoctors] = useState([
+    // Your doctors array remains the same...
+    
+
     {
-      _id: 'doc1',
-      name: 'Dr. Richard James',
-      image: 'images/doc1.jpg',
-      speciality: '9822297413',
-      degree: 'MBBS',
-      experience: '4 Years',
-      fees: 50,
+      _id: "doc1",
+      name: "Dr. Rupa Kinkar",
+      image: "images/doc1.jpg", // Update the image path accordingly
+      speciality: "9822232545",
+      degree: "MBBS",
+      experience: "8 Years",
+      fees: 700,
       address: {
-        line1: '17th Cross, Richmond',
-        line2: 'Circle, Ring Road, London',
+        line1: "Regional Mental Hospital",
+        line2: "Thane",
       },
     },
     {
-      _id: 'doc2',
-      name: 'Dr. Emily Larson',
-      image: 'images/doc2.jpg',
-      speciality: '9503155275',
-      degree: 'MBBS',
-      experience: '3 Years',
-      fees: 60,
+      _id: "doc2",
+      name: "Dr. Sunil Karande",
+      image: "images/doc2.jpg",
+      speciality: "8600654173",
+      degree: "MBBS",
+      experience: "5 Years",
+      fees: 800,
       address: {
-        line1: '27th Cross, Richmond',
-        line2: 'Circle, Ring Road, London',
+        line1: "K.E.M. Hospital",
+        line2: "Parel, Mumbai",
       },
     },
     {
-      _id: 'doc3',
-      name: 'Dr. Sarah Patel',
-      image: 'images/doc3.jpg',
-      speciality: '8600654172',
-      degree: 'MBBS',
-      experience: '1 Year',
-      fees: 30,
+      _id: "doc3",
+      name: "Dr. Jitendra Chandurkar",
+      image: "images/doc3.jpg",
+      speciality: "6596564742",
+      degree: "MBBS",
+      experience: "3 Years",
+      fees: 600,
       address: {
-        line1: '37th Cross, Richmond',
-        line2: 'Circle, Ring Road, London',
+        line1: "Shushrut Clinic",
+        line2: "Badlapur",
       },
     },
     {
-      _id: 'doc4',
-      name: 'Dr. Christopher Lee',
-      image: 'images/doc4.jpg',
-      speciality: '8424034147',
-      degree: 'MBBS',
-      experience: '2 Years',
-      fees: 40,
+      _id: "doc4",
+      name: "Dr. A.U. Athawle",
+      image: "images/doc4.jpg",
+      speciality: "9420364148",
+      degree: "MBBS",
+      experience: "4 Years",
+      fees: 300,
       address: {
-        line1: '47th Cross, Richmond',
-        line2: 'Circle, Ring Road, London',
+        line1: "Central Hospital",
+        line2: "Ulhasnagar",
       },
     },
     {
-      _id: 'doc5',
-      name: 'Dr. Jennifer Garcia',
-      image: 'images/doc5.jpg',
-      speciality: '9322360596',
-      degree: 'MBBS',
-      experience: '4 Years',
-      fees: 50,
+      _id: "doc5",
+      name: "Dr. Chetan Bhaskar Bahiram",
+      image: "images/doc5.jpg",
+      speciality: "8120365878",
+      degree: "MBBS",
+      experience: "7 Years",
+      fees: 1200,
       address: {
-        line1: '57th Cross, Richmond',
-        line2: 'Circle, Ring Road, London',
+        line1: "J.J. Hospital",
+        line2: "Byculla, Mumbai",
       },
     },
     {
-      _id: 'doc6',
-      name: 'Dr. Andrew Williams',
-      image: 'images/doc6.jpg',
-      speciality: '8424034147',
-      degree: 'MBBS',
-      experience: '4 Years',
-      fees: 50,
+      _id: "doc6",
+      name: "Dr. Vikas Pawar",
+      image: "images/doc6.jpg",
+      speciality: "5326897586",
+      degree: "MBBS, MD ",
+      experience: "5 Years",
+      fees: 500,
       address: {
-        line1: '57th Cross, Richmond',
-        line2: 'Circle, Ring Road, London',
-      },
-    },
+        line1: "Indravati Hospital",
+        line2: "Airoli",
+            },
+          },
   ]);
 
+  const [bookedAppointments, setBookedAppointments] = useState([]);
+
+  // Function to add a booked appointment
+  const bookAppointment = (doctor, date, time) => {
+    const newAppointment = {
+      doctor,
+      date: new Date(date),
+      time,
+    };
+    setBookedAppointments([...bookedAppointments, newAppointment]);
+  };
+
+  // Function to cancel an appointment by index
+  const cancelAppointment = (index) => {
+    setBookedAppointments(bookedAppointments.filter((_, i) => i !== index));
+  };
+
   return (
-    <AppContext.Provider value={{ doctors }}>
+    <AppContext.Provider value={{ doctors, bookedAppointments, bookAppointment, cancelAppointment }}>
       {children}
     </AppContext.Provider>
   );
 };
-

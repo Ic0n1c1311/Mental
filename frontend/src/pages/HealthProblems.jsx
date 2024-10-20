@@ -4,71 +4,10 @@ import { Link } from "react-router-dom";
 const HealthProblems = () => {
   return (
     <div className="bg-[#ffe5b4] font-quicksand">
-      <nav className="bg-darkviolet text-white py-4 sticky top-0 z-10 ">
-        <ul className="flex justify-center space-x-4">
-          <div className=" flex justify-between  justify-items-start ">
-            <img
-              src="./images/logo.png"
-              alt=""
-              width="30"
-              height="24"
-              className="d-inline-block align-text-top"
-            />
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarScroll"
-              aria-controls="navbarScroll"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>{" "}
-            </button>
-          </div>
-          <li>
-            <Link to="/home" className="hover:border-b-2 border-yellow-500">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/blogs" className="hover:border-b-2 border-yellow-500">
-              Blogs
-            </Link>
-          </li>
-          <li>
-            <Link to="/healthProblems" className="border-b-2 border-yellow-500">
-              Health Problems
-            </Link>
-          </li>
-          <li>
-            <Link to="/sessions" className="hover:border-b-2 border-yellow-500">
-              Live Sessions
-            </Link>
-          </li>
-          <li>
-            <Link to="/aboutus" className="hover:border-b-2 border-yellow-500">
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link to="/sign-up" className="hover:border-b-2 border-yellow-500">
-              Sign Up
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="hover:border-b-2 hover:border-yellow-400"
-              to="/quiz"
-            >
-              Test
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      Your health problem content goes here
+      
+  
       <div className="p-8">
-        Map through health problems
+       
         <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 mb-4">
           <h3 className="text-teal-600 text-2xl font-semibold mb-2">
             Anxiety disorders

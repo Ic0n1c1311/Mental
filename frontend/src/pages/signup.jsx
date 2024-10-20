@@ -14,12 +14,10 @@ const Signup = () => {
 
     try {
       // Make a POST request to the backend
-      const response = await axios.post("/api/user/signup", {
-        // Updated URL
-        name,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/user/signup",
+        { name, email, password }
+      );
 
       // Store the JWT token in localStorage
       localStorage.setItem("jwtToken", response.data.token);

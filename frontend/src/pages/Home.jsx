@@ -34,25 +34,26 @@ const CombinedHomePage = () => {
               <div>
                 <span className="mha-hero-underline text-4xl font-bold">Mental Health</span>
               </div> 
-              <Link to="/educate-yourself" aria-label="Link to the 'Educate Yourself' page" className="block mt-4 text-2xl">
+              {/* Update the Link routes */}
+              <Link to="/blogs" aria-label="Link to the Blogs page" className="block mt-4 text-2xl">
                 What is it?
               </Link>
-              <Link to="/help-yourself" aria-label="Link to the 'Help Yourself' page" className="block mt-2 text-2xl">
+              <Link to="/healthproblems" aria-label="Link to the Health Problems page" className="block mt-2 text-2xl">
                 How can you help yourself?
               </Link>
-              <Link to="/help-others" aria-label="Link to the 'Help Others' page" className="block mt-2 text-2xl">
+              <Link to="/healthproblems" aria-label="Link to the Health Problems page" className="block mt-2 text-2xl">
                 How can you help others?
               </Link>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 };
 
 export default CombinedHomePage;
+
 
 
 
